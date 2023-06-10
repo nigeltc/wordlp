@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WORDLP</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-3">WORDLP - spaCy NLP app</h1>
+        <form method="POST" action="{{ url_for('analze_text') }}">
+            <div class="form-group">
+                <label for="text">Enter text to analyze</label>
+                <textarea class="form-control" name="text" rows="10" placeholder="Enter text to analyze" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Analyze</button>
+        </form>
+        {% if entities %}
+        <div class="mt-5">
+            <h3>Entities</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Entity</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity[0] }}</td>
+                        <td>{{ entity[1] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        {% if dependencies %} 
+        <div class="mt-5">
+            <h3>Dependencies</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Token</th>
+                        <th>Dependency</th>
+                        <th>Head</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dependency in dependencies %}
+                    <tr>
+                        <td>{{ dependency[0] }}</td>
+                        <td>{{ dependency[1] }}</td>
+                        <td>{{ dependency[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %} 
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+</body>
+</html>

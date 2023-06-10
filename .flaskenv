@@ -1,0 +1,2 @@
+FLASK_APP=wordlp.py
+FLASK_DEBUG=True
