@@ -5,7 +5,7 @@ import spacy
 app = Flask(__name__)
 nlp = spacy.load('en_core_web_lg')
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def analyze_text():
     """Analyze text"""
     if request.method == 'POST':
