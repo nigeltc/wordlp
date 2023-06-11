@@ -8,66 +8,85 @@
 <body>
     <div class="container mt-5">
         <h1 class="mb-3">WORDLP - spaCy NLP app</h1>
-        <form method="POST" action="{{ url_for('analyze_text') }}">
-            <div class="form-group">
-                <label for="text">Enter text to analyze</label>
-                <textarea class="form-control" name="text" rows="10" placeholder="Enter text to analyze" required></textarea>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="input_tab" data-toggle="tab" href="#input">Input</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="text_tab" data-toggle="tab" href="#text">Text</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="entities_tab" data-toggle="tab" href="#entities">Entities</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="deps_tab" data-toggle="tab" href="#deps">Dependencies</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="input">
+                <form method="POST" action="{{ url_for('analyze_text') }}">
+                    <div class="form-group">
+                        <label for="text">Enter text to analyze</label>
+                        <textarea class="form-control" name="text" rows="10" placeholder="Enter text to analyze" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Analyze</button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-primary">Analyze</button>
-        </form>
-        {% if text %}
-        <div class="mt-5">
-            <h3>Text</h3>
-            <hr>
-            <p>{{ text }} </p>
-            <hr>
+            <div class="tab-pane fade" id="text">
+                <h3>Text</h3>
+                <hr>
+                {% if text %}
+                <p>{{ text }} </p>
+                <hr>
+                {% endif %}
+            </div>
+            <div class="tab-pane fade" id="entities">
+                <h3>Entities</h3>
+                <hr>
+                {% if entities %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Entity</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entity in entities %}
+                        <tr>
+                            <td>{{ entity[0] }}</td>
+                            <td>{{ entity[1] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>  
+            <div class="tab-pane fade" id="deps">
+                <h3>Dependencies</h3>
+                <hr>
+                {% if dependencies %} 
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th>Dependency</th>
+                            <th>Head</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dependency in dependencies %}
+                        <tr>
+                            <td>{{ dependency[0] }}</td>
+                            <td>{{ dependency[1] }}</td>
+                            <td>{{ dependency[2] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
         </div>
-        {% endif %}
-        {% if entities %}
-        <div class="mt-5">
-            <h3>Entities</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Entity</th>
-                        <th>Type</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entity in entities %}
-                    <tr>
-                        <td>{{ entity[0] }}</td>
-                        <td>{{ entity[1] }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>  
-        {% endif %}
-        {% if dependencies %} 
-        <div class="mt-5">
-            <h3>Dependencies</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Token</th>
-                        <th>Dependency</th>
-                        <th>Head</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for dependency in dependencies %}
-                    <tr>
-                        <td>{{ dependency[0] }}</td>
-                        <td>{{ dependency[1] }}</td>
-                        <td>{{ dependency[2] }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% endif %} 
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
